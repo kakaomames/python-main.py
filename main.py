@@ -8,11 +8,14 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-# Pythonコードを実行するエンドポイント
-@app.route('/run_python_code', methods=['POST'])
+# PythonコードをGETリクエストで実行するエンドポイント
+@app.route('/run_python_code', methods=['GET'])
 def run_python_code():
-    code = request.form['code']
+    code = request.args.get('code', '')
     
+    if not code:
+        return jsonify({'error': 'コードが提供されていません'})
+
     try:
         # execを使ってPythonコードを実行
         local_vars = {}
