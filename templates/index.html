@@ -24,10 +24,12 @@
 
             var code = $('#code').val();
 
+            // URLパラメータとしてPythonコードを送信
+            var encodedCode = encodeURIComponent(code);
+
             $.ajax({
-                url: '/run_python_code',
-                method: 'POST',
-                data: { code: code },
+                url: '/run_python_code?code=' + encodedCode,
+                method: 'GET',
                 success: function(response) {
                     $('#result').text(JSON.stringify(response, null, 2));
                 },
